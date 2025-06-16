@@ -1,81 +1,107 @@
 {
-    "version": 3,
-    "cmakeMinimumRequired": {
-      "major": 3,
-      "minor": 20,
-      "patch": 0
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "23",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_CXX_EXTENSIONS": "OFF",
+        "HERMES_BUILD_TESTING": "ON"  
+      }
     },
-    "configurePresets": [
-      {
-        "name": "base",
-        "hidden": true,
-        "generator": "Ninja",
-        "binaryDir": "${sourceDir}/build/${presetName}",
-        "installDir": "${sourceDir}/install/${presetName}",
-        "cacheVariables": {
-          "CMAKE_CXX_STANDARD": "23",
-          "CMAKE_CXX_STANDARD_REQUIRED": "ON",
-          "CMAKE_CXX_EXTENSIONS": "OFF",
-          "HERMES_ENABLE_SIMD": "ON",
-          "HERMES_ENABLE_GEOMETRY_LOGGING": "ON"
-        }
+    {
+      "name": "gcc-release",
+      "displayName": "GCC Release (CAD Optimized)",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_CXX_FLAGS": "-march=native -ffloat-store -fno-exceptions"
       },
-      {
-        "name": "gcc-release",
-        "displayName": "GCC Release (CAD Optimized)",
-        "inherits": "base",
-        "cacheVariables": {
-          "CMAKE_BUILD_TYPE": "Release",
-          "CMAKE_CXX_COMPILER": "g++",
-          "CMAKE_CXX_FLAGS": "-march=native -ffloat-store -fno-exceptions"
-        },
-        "environment": {
-          "CXXFLAGS": "-Wall -Wextra -Wpedantic"
-        }
-      },
-      {
-        "name": "clang-debug",
-        "displayName": "Clang Debug (CAD Diagnostics)",
-        "inherits": "base",
-        "cacheVariables": {
-          "CMAKE_BUILD_TYPE": "Debug",
-          "CMAKE_CXX_COMPILER": "clang++",
-          "CMAKE_CXX_FLAGS": "-fstandalone-debug -Rpass=.*"
-        }
-      },
-      {
-        "name": "msvc-cad",
-        "displayName": "MSVC CAD Production",
-        "inherits": "base",
-        "generator": "Visual Studio 17 2022",
-        "architecture": "x64",
-        "cacheVariables": {
-          "CMAKE_CXX_FLAGS": "/arch:AVX2 /fp:precise /EHsc",
-          "CMAKE_BUILD_TYPE": "RelWithDebInfo"
-        }
+      "environment": {
+        "CXXFLAGS": "-Wall -Wextra -Wpedantic"
       }
-    ],
-    "buildPresets": [
-      {
-        "name": "gcc-release",
-        "configurePreset": "gcc-release",
-        "jobs": 8
+    },
+    {
+      "name": "gcc-debug",
+      "displayName": "GCC Debug (Tests + Sanitizers)",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_CXX_FLAGS": "-ggdb3 -fno-omit-frame-pointer -fsanitize=address,undefined -fno-optimize-sibling-calls"   
       },
-      {
-        "name": "clang-debug",
-        "configurePreset": "clang-debug",
-        "targets": ["HermesLogger", "tests"]
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1",
+        "UBSAN_OPTIONS": "print_stacktrace=1"
       }
-    ],
-    "testPresets": [
-      {
-        "name": "cad-tests",
-        "configurePreset": "clang-debug",
-        "output": {"outputOnFailure": true},
-        "execution": {
-          "noTestsAction": "error",
-          "stopOnFailure": false
-        }
+    },
+    {
+      "name": "clang-debug",
+      "displayName": "Clang Debug (CAD Diagnostics)",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_CXX_FLAGS": "-fstandalone-debug -Rpass=.*"
       }
-    ]
-  }
+    },
+    {
+      "name": "msvc-cad",
+      "displayName": "MSVC CAD Production",
+      "inherits": "base",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/arch:AVX2 /fp:precise /EHsc",
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "gcc-release",
+      "configurePreset": "gcc-release",
+      "jobs": 8
+    },
+    {
+      "name": "gcc-debug",
+      "configurePreset": "gcc-debug",
+      "targets": ["HermesLogger", "HermesLoggerTests"],
+      "jobs": 4  
+    },
+    {
+      "name": "clang-debug",
+      "configurePreset": "clang-debug",
+      "targets": ["HermesLogger", "tests"]
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "gcc-test",
+      "configurePreset": "gcc-debug",
+      "output": {"outputOnFailure": true},
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      },
+      "environment": {
+        "ASAN_OPTIONS": "detect_stack_use_after_return=1"
+      }
+    },
+    {
+      "name": "cad-tests",
+      "configurePreset": "clang-debug",
+      "output": {"outputOnFailure": true},
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    }
+  ]
+}

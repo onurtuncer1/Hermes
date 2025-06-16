@@ -10,6 +10,7 @@
 
 namespace Hermes {
 
+    
 class Logger {
 public:
     enum class Level { Trace, Debug, Info, Warn, Error, Critical, Off };
@@ -23,12 +24,11 @@ public:
         virtual void flush() = 0;
     };
 
-    // Core logging function (header-only implementation)
-    template<typename... Args>
-    static void log(Level level, std::format_string<Args...> fmt, Args&&... args,
-                   const std::source_location& loc = std::source_location::current()) {
+   template <typename... Args>
+static void log(Level level, std::format_string<Args...> fmt, Args&&... args,
+                const std::source_location& loc = std::source_location::current())
+  {
         if (level < instance().current_level.load(std::memory_order_relaxed)) return;
-        
         const auto formatted = std::format(fmt, std::forward<Args>(args)...);
         instance().dispatch(level, formatted, loc);
     }
@@ -38,6 +38,10 @@ public:
         std::lock_guard lock(instance().sinks_mutex);
         instance().sinks.push_back(std::move(sink));
     }
+
+    static void set_level(Level level) {
+    instance().current_level.store(level);
+}
 
 private:
     // Singleton implementation

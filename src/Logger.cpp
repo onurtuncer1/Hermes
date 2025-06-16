@@ -1,5 +1,5 @@
-// src/HermesLogger.cpp
-#include "HermesLogger.h"
+
+#include "Logger.h"
 
 namespace Hermes {
 

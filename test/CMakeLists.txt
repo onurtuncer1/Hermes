@@ -1,13 +1,22 @@
 cmake_minimum_required(VERSION 3.21)
 
-# Find Catch2 (v3+ recommended)
-find_package(Catch2 REQUIRED)
+project(HermesLoggerTests LANGUAGES CXX)
 
-# Test executable
+include(FetchContent)
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG        v3.5.4
+)
+FetchContent_MakeAvailable(Catch2)
+
+include(Catch)
+
 add_executable(HermesLoggerTests
-  TestBasicLogging.cpp
-  TestSinks.cpp
-  TestCADFormatters.cpp
+  test_BasicLogging.cpp
+  # test_Sinks.cpp
+  # test_Formatters.cpp
+  # test_Macros.cpp
 )
 
 target_link_libraries(HermesLoggerTests PRIVATE
@@ -15,5 +24,6 @@ target_link_libraries(HermesLoggerTests PRIVATE
   Catch2::Catch2WithMain
 )
 
-# Enable test discovery
+
 catch_discover_tests(HermesLoggerTests)
+

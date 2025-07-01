@@ -14,7 +14,7 @@ include(Catch)
 
 add_executable(HermesLoggerTests
   test_BasicLogging.cpp
-  # test_Sinks.cpp
+  test_Sinks.cpp
   # test_Formatters.cpp
   # test_Macros.cpp
 )

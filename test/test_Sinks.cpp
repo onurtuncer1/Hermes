@@ -17,14 +17,14 @@ public:
 };
 
 TEST_CASE("Sink system", "[sinks]") {
-    auto test_sink = std::make_unique<TestSink>();
-    auto& sink_ref = *test_sink;
-    
-    Hermes::Logger::add_sink(std::move(test_sink));
+    auto shared_sink = std::make_shared<TestSink>();
+    Hermes::Logger::clear_sinks_for_testing();  
     Hermes::Logger::set_level(Hermes::Logger::Level::Trace);
 
     SECTION("Messages reach sinks") {
-        Hermes::Logger::log(Hermes::Logger::Level::Error, "Test error", {});
-        REQUIRE(sink_ref.stream.str().find("[ERROR] Test error") != std::string::npos);
+        Hermes::Logger::log(Hermes::Logger::Level::Error, "Test error");
+        REQUIRE(shared_sink->stream.str().find("[ERROR] Test error") != std::string::npos);
     }
 }
+
+

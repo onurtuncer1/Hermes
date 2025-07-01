@@ -16,7 +16,7 @@
     },
     {
       "name": "gcc-release",
-      "displayName": "GCC Release (CAD Optimized)",
+      "displayName": "GCC Release",
       "inherits": "base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
@@ -52,8 +52,8 @@
       }
     },
     {
-      "name": "msvc-cad",
-      "displayName": "MSVC CAD Production",
+      "name": "msvc-RelWithDebInfo",
+      "displayName": "MSVC RelWithDebInfo",
       "inherits": "base",
       "generator": "Visual Studio 17 2022",
       "architecture": "x64",
@@ -92,15 +92,6 @@
       },
       "environment": {
         "ASAN_OPTIONS": "detect_stack_use_after_return=1"
-      }
-    },
-    {
-      "name": "cad-tests",
-      "configurePreset": "clang-debug",
-      "output": {"outputOnFailure": true},
-      "execution": {
-        "noTestsAction": "error",
-        "stopOnFailure": false
       }
     }
   ]

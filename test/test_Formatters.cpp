@@ -6,7 +6,7 @@ struct Point3D { double x, y, z; };
 
 template <>
 struct std::formatter<Point3D> {
-    constexpr auto parse(format_parse_context& ctx) {
+    auto parse(format_parse_context& ctx) {
         return ctx.begin();
     }
 

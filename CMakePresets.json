@@ -11,7 +11,7 @@
         "CMAKE_CXX_STANDARD": "23",
         "CMAKE_CXX_STANDARD_REQUIRED": "ON",
         "CMAKE_CXX_EXTENSIONS": "OFF",
-        "HERMES_BUILD_TESTING": "ON"  
+        "BUILD_TESTS": "ON"  
       }
     },
     {
@@ -21,7 +21,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_CXX_COMPILER": "g++",
-        "CMAKE_CXX_FLAGS": "-march=native -ffloat-store -fno-exceptions"
+        "CMAKE_CXX_FLAGS": "-march=native -ffloat-store"
       },
       "environment": {
         "CXXFLAGS": "-Wall -Wextra -Wpedantic"
@@ -43,23 +43,12 @@
     },
     {
       "name": "clang-debug",
-      "displayName": "Clang Debug (CAD Diagnostics)",
+      "displayName": "Clang Debug",
       "inherits": "base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_CXX_COMPILER": "clang++",
         "CMAKE_CXX_FLAGS": "-fstandalone-debug -Rpass=.*"
-      }
-    },
-    {
-      "name": "msvc-RelWithDebInfo",
-      "displayName": "MSVC RelWithDebInfo",
-      "inherits": "base",
-      "generator": "Visual Studio 17 2022",
-      "architecture": "x64",
-      "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/arch:AVX2 /fp:precise /EHsc",
-        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
       }
     }
   ],
@@ -72,13 +61,13 @@
     {
       "name": "gcc-debug",
       "configurePreset": "gcc-debug",
-      "targets": ["HermesLogger", "HermesLoggerTests"],
+      "targets": ["Hermes", "HermesTests"],
       "jobs": 4  
     },
     {
       "name": "clang-debug",
       "configurePreset": "clang-debug",
-      "targets": ["HermesLogger", "tests"]
+      "targets": ["Hermes", "tests"]
     }
   ],
   "testPresets": [

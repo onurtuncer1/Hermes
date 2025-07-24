@@ -1,6 +1,3 @@
-cmake_minimum_required(VERSION 3.21)
-
-project(HermesLoggerTests LANGUAGES CXX)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -12,18 +9,17 @@ FetchContent_MakeAvailable(Catch2)
 
 include(Catch)
 
-add_executable(HermesLoggerTests
+add_executable(${PROJECT_NAME}Tests
   test_BasicLogging.cpp
   test_Sinks.cpp
   # test_Formatters.cpp
-  # test_Macros.cpp
 )
 
-target_link_libraries(HermesLoggerTests PRIVATE
-  Hermes::Logger
+target_link_libraries(${PROJECT_NAME}Tests PRIVATE
+  ${PROJECT_NAME}::Logger
   Catch2::Catch2WithMain
 )
 
 
-catch_discover_tests(HermesLoggerTests)
+catch_discover_tests(${PROJECT_NAME}Tests)
 

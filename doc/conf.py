@@ -16,9 +16,8 @@
 
 import subprocess, os
 import warnings
-from sphinx.deprecation import RemovedInSphinx80Warning
 
-warnings.filterwarnings("ignore", category=RemovedInSphinx80Warning)
+# warnings.filterwarnings("ignore", category=RemovedInSphinx80Warning)
 
 def configureDoxyfile(input_dir, output_dir):
 

@@ -35,6 +35,10 @@ jobs:
       - name: Set SPHINX_EXECUTABLE for CMake
         run: echo "SPHINX_EXECUTABLE=$(which sphinx-build)" >> $GITHUB_ENV
 
+      - name: Install extensions
+        run: pip install -r docs/requirements.txt
+
+
       - name: Install system deps
         run: |
           sudo apt-get update

@@ -44,9 +44,9 @@ if read_the_docs_build:
 
 # -- Project information -----------------------------------------------------
 
-project = 'Logger'
-copyright = '2024, MILTEKSAN'
-author = 'MILTEKSAN'
+project = 'Hermes'
+copyright = '2025, Onur Tuncer, PhD'
+author = 'Onur Tuncer, PhD'
 
 
 # -- General configuration ---------------------------------------------------
@@ -94,7 +94,7 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 # Breathe Configuration
-breathe_default_project = "Logger"
+breathe_default_project = "Hermes"
 
 bibtex_bibfiles = ['references.bib']
 bibtex_encoding = 'latin'

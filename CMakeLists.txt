@@ -10,6 +10,12 @@ project(Hermes
 # set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # set(CMAKE_CXX_EXTENSIONS OFF)
 
+if (BUILD_DOCS)
+  set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+  add_subdirectory(doc)
+  return() # Avoid compiling the library if we are only building docs
+endif()
+
 
 add_library(${PROJECT_NAME})
 add_library(Hermes::Logger ALIAS ${PROJECT_NAME})
@@ -45,12 +51,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 #   NAMESPACE Hermes::
 #   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 # )
-
-if (BUILD_DOCS)
-  set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-  add_subdirectory(doc)
-endif()
-
 
 if(BUILD_TESTS)
 	set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")

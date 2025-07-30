@@ -74,7 +74,10 @@ documents:
 	@echo "Building documentation from $(DOC_SRC_DIR) into $(DOC_BUILD_DIR)"
 	@mkdir -p "$(DOC_BUILD_DIR)"
 	cd "$(DOC_BUILD_DIR)" && \
-		cmake -S "$(DOC_SRC_DIR)" -B $(DOC_BUILD_DIR) -G"Unix Makefiles" -DBUILD_DOCS=ON && \
+		cmake -S "$(DOC_SRC_DIR)" -B $(DOC_BUILD_DIR) \
+		      -G"Unix Makefiles" \
+			  -DCMAKE_CXX_STANDARD=23 \
+			  -DBUILD_DOCS=ON && \
 		$(MAKE)
 	@cp -r "$(DOC_BUILD_DIR)/Documentation" "$(BUILD_DIR)/"
 	@rm -rf "$(BUILD_DIR)/doc"

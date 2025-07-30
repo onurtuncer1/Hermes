@@ -1,9 +1,11 @@
 # Hermes
 
-## Build Status
-
-| GCC Release    | ![GCC Release](https://github.com/<your-username>/<your-repo>/actions/workflows/gcc-release.yml/badge.svg) |
+[![ci](https://github.com/otuncer1/Hermes/actions/workflows/linux.yml/badge.svg)](https://github.com/otuncer1/Hermes/actions/workflows/linux.yml)&nbsp;
 
 
+C++ logging library (work in progress)
 
-A high performance modern and lightweight logging library (work in progress)
+## Platforms
+* Linux
+
+

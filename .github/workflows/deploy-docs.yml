@@ -26,6 +26,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+      
+      - name: Install Sphinx (for CMake)
+        run: |
+          python -m pip install --upgrade pip
+          pip install sphinx sphinx-rtd-theme
+
+      - name: Set SPHINX_EXECUTABLE for CMake
+        run: echo "SPHINX_EXECUTABLE=$(which sphinx-build)" >> $GITHUB_ENV
 
       - name: Install system deps
         run: |

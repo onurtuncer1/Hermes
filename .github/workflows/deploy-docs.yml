@@ -1,0 +1,57 @@
+name: Build & Deploy Docs to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]  # change if default branch is different
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python (for Sphinx, safe even if unused)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y doxygen graphviz cmake ninja-build make gcc g++
+
+      - name: Build documentation via Makefile
+        run: make documents
+
+      - name: Upload HTML docs to GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/Documentation/html
+
+  deploy:
+    needs: build-docs
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

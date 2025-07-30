@@ -36,8 +36,7 @@ jobs:
         run: echo "SPHINX_EXECUTABLE=$(which sphinx-build)" >> $GITHUB_ENV
 
       - name: Install extensions
-        run: pip install -r docs/requirements.txt
-
+        run: pip install -r doc/requirements.txt
 
       - name: Install system deps
         run: |

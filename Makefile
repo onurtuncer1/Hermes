@@ -79,8 +79,8 @@ documents:
 			  -DCMAKE_CXX_STANDARD=23 \
 			  -DBUILD_DOCS=ON && \
 		$(MAKE)
-	@cp -r "$(DOC_BUILD_DIR)/Documentation" "$(BUILD_DIR)/"
-	@rm -rf "$(BUILD_DIR)/doc"
+#	@cp -r "$(DOC_BUILD_DIR)/Documentation" "$(BUILD_DIR)/"
+#	@rm -rf "$(BUILD_DIR)/doc"
 
 
 # Cleanup

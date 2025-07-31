@@ -8,4 +8,9 @@ C++ logging library (work in progress)
 ## Platforms
 * Linux
 
+## 📚 Documentation
+
+👉 [Hermes C++ API Docs](https://otuncer1.github.io/Hermes/)
+
+
 

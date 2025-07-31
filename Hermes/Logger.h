@@ -67,7 +67,9 @@ public:
      * @param args Format arguments.
      */
     template <typename... Args>
-    static void log(Level level, std::string_view fmt, Args&&... args);
+    static void log(Level level, std::string_view fmt, Args&&... args) {
+        log(std::source_location::current(), level, fmt, std::forward<Args>(args)...);
+    }
 
     /**
      * @brief Logs a message with an explicitly provided source location.
@@ -82,7 +84,9 @@ public:
     static void log(const std::source_location& loc,
                     Level level,
                     std::string_view fmt,
-                    Args&&... args);
+                    Args&&... args) {
+        instance().log_with_location(loc, level, fmt, std::forward<Args>(args)...);
+    }
 
     /**
      * @brief Instance method to log with explicit source location.
@@ -97,7 +101,11 @@ public:
     void log_with_location(const std::source_location& loc,
                            Level level,
                            std::string_view fmt,
-                           Args&&... args);
+                           Args&&... args) {
+        if (level < current_level.load(std::memory_order_relaxed)) return;
+        const auto formatted = std::vformat(fmt, std::make_format_args(args...));
+        dispatch(level, formatted, loc);
+    }
 
     /**
      * @brief Adds a sink to the global logger instance.
@@ -139,9 +147,9 @@ private:
      */
     void dispatch(Level level, std::string_view message, const std::source_location& loc);
 
-    std::vector<std::shared_ptr<Sink>> sinks; ///< Registered sinks.
-    std::mutex sinks_mutex; ///< Mutex for sink access.
-    std::atomic<Level> current_level{Level::Info}; ///< Current logging level.
+    std::vector<std::shared_ptr<Sink>> sinks;                ///< Registered sinks.
+    std::mutex sinks_mutex;                                  ///< Mutex for sink access.
+    std::atomic<Level> current_level{Level::Info};           ///< Current logging level.
 };
 
 /**
@@ -166,10 +174,5 @@ public:
 
 } // namespace Hermes
 
-// // #define HERMES_TRACE(...)    Hermes::Logger::log(Hermes::Logger::Level::Trace, __VA_ARGS__)
-// // #define HERMES_DEBUG(...)    Hermes::Logger::log(Hermes::Logger::Level::Debug, __VA_ARGS__)
-// // #define HERMES_INFO(...)     Hermes::Logger::log(Hermes::Logger::Level::Info, __VA_ARGS__)
-// // #define HERMES_WARN(...)     Hermes::Logger::log(Hermes::Logger::Level::Warn, __VA_ARGS__)
-// // #define HERMES_ERROR(...)    Hermes::Logger::log(Hermes::Logger::Level::Error, __VA_ARGS__)
-// // #define HERMES_CRITICAL(...) Hermes::Logger::log(Hermes::Logger::Level::Critical, __VA_ARGS__)
+
 

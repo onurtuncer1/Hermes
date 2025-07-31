@@ -22,5 +22,19 @@ void Logger::dispatch(Level level, std::string_view message,
     }
 }
 
+void Logger::add_sink(std::shared_ptr<Sink> sink) {
+    std::lock_guard lock(instance().sinks_mutex);
+    instance().sinks.push_back(std::move(sink));
+}
+
+void Logger::set_level(Level level) {
+    instance().current_level.store(level);
+}
+
+void Logger::clear_sinks_for_testing() {
+    std::lock_guard lock(instance().sinks_mutex);
+    instance().sinks.clear();
+}
+
 } // namespace Hermes
 

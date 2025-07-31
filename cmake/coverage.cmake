@@ -1,19 +1,4 @@
-############################################################
-#                                                          #
-#  Copyright 2022 MILTEKSAN                                #
-#  Use of this software is restricted to MILTEKSAN         #
-#                                                          #
-#  Project:    [MessageLogger]                             #
-#  File:       [coverage.cmake]                            #
-#  Created on: [06.06.2024]                                #
-#  Version:    [0.1.1]                                     #
-#                                                          #
-#  Developed by:                                           #
-#    [Onur Tuncer]      [onur.tuncer@melina-aero.com]      #
-#    [Fehim Kus]        [fehim.kus@milteksan.com]          #
-#    [Ahmet Can Fakili] [ahmetcanfakili@milteksan.com]     #
-#                                                          #
-############################################################
+
 
 function(add_coverage_target exclude)
 

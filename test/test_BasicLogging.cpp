@@ -3,14 +3,15 @@
 
 using namespace Hermes;
 
-TEST_CASE("Basic logging functionality", "[core]") {
-    Logger::clear_sinks_for_testing();
-    Logger::set_level(Hermes::Logger::Level::Info);
-    Logger::add_sink(std::make_shared<Hermes::ConsoleSink>());
+TEST_CASE("Basic logging functionality", "[core]")
+{
+	Logger::clear_sinks_for_testing();
+	Logger::set_level(Hermes::Logger::Level::Info);
+	Logger::add_sink(std::make_shared<Hermes::ConsoleSink>());
 
-    SECTION("Formatting works") {
-        Logger::log(Hermes::Logger::Level::Info, "Value: {}", 42);
-        Logger::log(Hermes::Logger::Level::Warn, "Value: {}", 43);
-        REQUIRE(true);
-    }
+	SECTION("Formatting works") {
+		Logger::log(Hermes::Logger::Level::Info, "Value: {}", 42);
+		Logger::log(Hermes::Logger::Level::Warn, "Value: {}", 43);
+		REQUIRE(true);
+	}
 }

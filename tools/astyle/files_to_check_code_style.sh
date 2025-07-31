@@ -7,5 +7,5 @@ if [ $# -gt 0 ]; then
     PATTERN="$1"
 fi
 
-exec find src MessageLogger test \
+exec find src Hermes test \
     \( -type f \( -name "*.c" -o -name "*.h" -o -name "*.cpp" -o -name "*.hpp" \) -print \) | grep $PATTERN

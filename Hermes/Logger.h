@@ -11,165 +11,173 @@
 #include <mutex>
 #include <string_view>
 
-namespace Hermes {
+namespace Hermes
+{
 
 /**
  * @brief Logger class providing static logging methods and log level management.
  *
  * Supports multiple log sinks and includes support for capturing source location information.
  */
-class Logger {
+class Logger
+{
 public:
-    /**
-     * @brief Logging levels.
-     */
-    enum class Level {
-        Trace,     ///< Verbose debugging information.
-        Debug,     ///< General debugging information.
-        Info,      ///< Informational messages.
-        Warn,      ///< Warnings that don’t interrupt execution.
-        Error,     ///< Errors that allow the program to continue.
-        Critical,  ///< Severe errors likely leading to termination.
-        Off        ///< Logging disabled.
-    };
+	/**
+	 * @brief Logging levels.
+	 */
+	enum class Level {
+		Trace,     ///< Verbose debugging information.
+		Debug,     ///< General debugging information.
+		Info,      ///< Informational messages.
+		Warn,      ///< Warnings that don’t interrupt execution.
+		Error,     ///< Errors that allow the program to continue.
+		Critical,  ///< Severe errors likely leading to termination.
+		Off        ///< Logging disabled.
+	};
 
-    /**
-     * @brief Abstract base class for all logging sinks.
-     */
-    class Sink {
-    public:
-        /// Virtual destructor.
-        virtual ~Sink() = default;
+	/**
+	 * @brief Abstract base class for all logging sinks.
+	 */
+	class Sink
+	{
+	public:
+		/// Virtual destructor.
+		virtual ~Sink() = default;
 
-        /**
-         * @brief Logs a formatted message at a specific level.
-         *
-         * @param level The log level.
-         * @param message The message to log.
-         * @param loc Source location of the log call.
-         */
-        virtual void log(Level level,
-                         std::string_view message,
-                         const std::source_location& loc) = 0;
+		/**
+		 * @brief Logs a formatted message at a specific level.
+		 *
+		 * @param level The log level.
+		 * @param message The message to log.
+		 * @param loc Source location of the log call.
+		 */
+		virtual void log(Level level,
+						 std::string_view message,
+						 const std::source_location &loc) = 0;
 
-        /// @brief Flush any buffered log output.
-        virtual void flush() = 0;
-    };
+		/// @brief Flush any buffered log output.
+		virtual void flush() = 0;
+	};
 
-    /**
-     * @brief Logs a message at the given level with formatting.
-     *
-     * Uses `std::source_location::current()` to capture the call site.
-     *
-     * @tparam Args Variadic arguments for formatting.
-     * @param level The logging level.
-     * @param fmt Format string.
-     * @param args Format arguments.
-     */
-    template <typename... Args>
-    static void log(Level level, std::string_view fmt, Args&&... args) {
-        log(std::source_location::current(), level, fmt, std::forward<Args>(args)...);
-    }
+	/**
+	 * @brief Logs a message at the given level with formatting.
+	 *
+	 * Uses `std::source_location::current()` to capture the call site.
+	 *
+	 * @tparam Args Variadic arguments for formatting.
+	 * @param level The logging level.
+	 * @param fmt Format string.
+	 * @param args Format arguments.
+	 */
+	template <typename... Args>
+	static void log(Level level, std::string_view fmt, Args &&... args)
+	{
+		log(std::source_location::current(), level, fmt, std::forward<Args>(args)...);
+	}
 
-    /**
-     * @brief Logs a message with an explicitly provided source location.
-     *
-     * @tparam Args Variadic arguments for formatting.
-     * @param loc Source location.
-     * @param level Logging level.
-     * @param fmt Format string.
-     * @param args Format arguments.
-     */
-    template <typename... Args>
-    static void log(const std::source_location& loc,
-                    Level level,
-                    std::string_view fmt,
-                    Args&&... args) {
-        instance().log_with_location(loc, level, fmt, std::forward<Args>(args)...);
-    }
+	/**
+	 * @brief Logs a message with an explicitly provided source location.
+	 *
+	 * @tparam Args Variadic arguments for formatting.
+	 * @param loc Source location.
+	 * @param level Logging level.
+	 * @param fmt Format string.
+	 * @param args Format arguments.
+	 */
+	template <typename... Args>
+	static void log(const std::source_location &loc,
+					Level level,
+					std::string_view fmt,
+					Args &&... args)
+	{
+		instance().log_with_location(loc, level, fmt, std::forward<Args>(args)...);
+	}
 
-    /**
-     * @brief Instance method to log with explicit source location.
-     *
-     * @tparam Args Variadic arguments for formatting.
-     * @param loc Source location.
-     * @param level Logging level.
-     * @param fmt Format string.
-     * @param args Format arguments.
-     */
-    template <typename... Args>
-    void log_with_location(const std::source_location& loc,
-                           Level level,
-                           std::string_view fmt,
-                           Args&&... args) {
-        if (level < current_level.load(std::memory_order_relaxed)) return;
-        const auto formatted = std::vformat(fmt, std::make_format_args(args...));
-        dispatch(level, formatted, loc);
-    }
+	/**
+	 * @brief Instance method to log with explicit source location.
+	 *
+	 * @tparam Args Variadic arguments for formatting.
+	 * @param loc Source location.
+	 * @param level Logging level.
+	 * @param fmt Format string.
+	 * @param args Format arguments.
+	 */
+	template <typename... Args>
+	void log_with_location(const std::source_location &loc,
+						   Level level,
+						   std::string_view fmt,
+						   Args &&... args)
+	{
+		if (level < current_level.load(std::memory_order_relaxed)) { return; }
 
-    /**
-     * @brief Adds a sink to the global logger instance.
-     *
-     * @param sink Shared pointer to a Sink implementation.
-     */
-    static void add_sink(std::shared_ptr<Sink> sink);
+		const auto formatted = std::vformat(fmt, std::make_format_args(args...));
+		dispatch(level, formatted, loc);
+	}
 
-    /**
-     * @brief Sets the global log level threshold.
-     *
-     * Messages below this level will be ignored.
-     *
-     * @param level Logging level to set.
-     */
-    static void set_level(Level level);
+	/**
+	 * @brief Adds a sink to the global logger instance.
+	 *
+	 * @param sink Shared pointer to a Sink implementation.
+	 */
+	static void add_sink(std::shared_ptr<Sink> sink);
 
-    /**
-     * @brief Removes all logging sinks. Used primarily for testing.
-     */
-    static void clear_sinks_for_testing();
+	/**
+	 * @brief Sets the global log level threshold.
+	 *
+	 * Messages below this level will be ignored.
+	 *
+	 * @param level Logging level to set.
+	 */
+	static void set_level(Level level);
+
+	/**
+	 * @brief Removes all logging sinks. Used primarily for testing.
+	 */
+	static void clear_sinks_for_testing();
 
 private:
-    /// Private constructor for singleton pattern.
-    Logger() = default;
+	/// Private constructor for singleton pattern.
+	Logger() = default;
 
-    /**
-     * @brief Returns the singleton logger instance.
-     * @return Reference to the singleton logger.
-     */
-    static Logger& instance();
+	/**
+	 * @brief Returns the singleton logger instance.
+	 * @return Reference to the singleton logger.
+	 */
+	static Logger &instance();
 
-    /**
-     * @brief Dispatches a formatted message to all registered sinks.
-     *
-     * @param level Logging level.
-     * @param message The formatted message.
-     * @param loc Source location.
-     */
-    void dispatch(Level level, std::string_view message, const std::source_location& loc);
+	/**
+	 * @brief Dispatches a formatted message to all registered sinks.
+	 *
+	 * @param level Logging level.
+	 * @param message The formatted message.
+	 * @param loc Source location.
+	 */
+	void dispatch(Level level, std::string_view message, const std::source_location &loc);
 
-    std::vector<std::shared_ptr<Sink>> sinks;                ///< Registered sinks.
-    std::mutex sinks_mutex;                                  ///< Mutex for sink access.
-    std::atomic<Level> current_level{Level::Info};           ///< Current logging level.
+	std::vector<std::shared_ptr<Sink>> sinks;                ///< Registered sinks.
+	std::mutex sinks_mutex;                                  ///< Mutex for sink access.
+	std::atomic<Level> current_level{Level::Info};           ///< Current logging level.
 };
 
 /**
  * @brief A simple sink that writes log messages to the console.
  */
-class ConsoleSink : public Logger::Sink {
+class ConsoleSink : public Logger::Sink
+{
 public:
-    /**
-     * @brief Logs a message to the console.
-     *
-     * @param level Logging level.
-     * @param message The message to log.
-     * @param loc Source location.
-     */
-    void log(Logger::Level level,
-             std::string_view message,
-             const std::source_location& loc) override;
+	/**
+	 * @brief Logs a message to the console.
+	 *
+	 * @param level Logging level.
+	 * @param message The message to log.
+	 * @param loc Source location.
+	 */
+	void log(Logger::Level level,
+			 std::string_view message,
+			 const std::source_location &loc) override;
 
-    /// @brief Flushes the console output.
-    void flush() override;
+	/// @brief Flushes the console output.
+	void flush() override;
 };
 
 } // namespace Hermes

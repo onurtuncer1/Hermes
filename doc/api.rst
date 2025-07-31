@@ -10,7 +10,10 @@ Hermes C++ API Reference
    :protected-members:
    :private-members:
    :outline:
-
+   :allow-dot-graphs:
+   
 .. doxygenclass:: Hermes::ConsoleSink
    :project: Hermes
    :members:
+   :allow-dot-graphs:
+   

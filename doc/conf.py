@@ -15,6 +15,7 @@ extensions = [
     'breathe',
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
+    'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
@@ -41,6 +42,10 @@ breathe_projects = {
     "Hermes": os.path.abspath(os.path.join(os.path.dirname(__file__), "doxygen/xml"))
 }
 breathe_default_project = "Hermes"
+breathe_default_namespace = "Hermes"
+
+# Whether to add '()' to function entries in the index and elsewhere
+add_function_parentheses = True
 
 # Optional: helpful print for debugging
 print("Breathe expects Doxygen XML at:", breathe_projects["Hermes"])

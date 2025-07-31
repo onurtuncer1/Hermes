@@ -39,9 +39,9 @@ clang-debug:
 
 # Style
 # --------------------------------------------------------------------
-.PHONY: check_format format check_newlines
+.PHONY: check-format format check-newlines
 
-check_format:
+check-format:
 	$(call colorecho,'Checking formatting with astyle')
 	@"$(ROOT_DIR)"/tools/astyle/check_code_style_all.sh
 	@cd "$(ROOT_DIR)" && git diff --check
@@ -50,7 +50,7 @@ format:
 	$(call colorecho,'Formatting with astyle')
 	@"$(ROOT_DIR)"/tools/astyle/check_code_style_all.sh --fix
 
-check_newlines:
+check-newlines:
 	$(call colorecho,'Checking for missing or duplicate newlines at the end of files')
 	@"$(ROOT_DIR)"/tools/astyle/check_newlines.sh
 
@@ -59,7 +59,7 @@ check_newlines:
 
 # Testing
 # --------------------------------------------------------------------
-.PHONY: tests tests_coverage
+.PHONY: tests test-coverage
 
 tests: gcc-test
 	cd $(BUILD_DIR)/gcc-test && ctest --output-on-failure

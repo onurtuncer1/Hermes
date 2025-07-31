@@ -10,7 +10,7 @@ C++ logging library (work in progress)
 
 ## 📚 Documentation
 
-👉 [Hermes C++ API Docs](https://otuncer1.github.io/Hermes/)
+👉 [Hermes C++ API Docs](https://onurtuncer1.github.io/Hermes/)
 
 
 

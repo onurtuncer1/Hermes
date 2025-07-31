@@ -6,10 +6,6 @@ project(Hermes
   DESCRIPTION "High performance logging"
 )
 
-# set(CMAKE_CXX_STANDARD 23)    Note these are already in the cache variables of CMakePresets.json
-# set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# set(CMAKE_CXX_EXTENSIONS OFF)
-
 if (BUILD_DOCS)
   set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
   add_subdirectory(doc)

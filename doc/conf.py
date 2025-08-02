@@ -3,9 +3,22 @@
 import os
 import sys
 
+# Step 1: Add parent directory to sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# Step 2: Import the function
+from get_project_name import get_project_name
+
+# Step 3: Compute absolute path to CMakeLists.txt
+cmake_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'CMakeLists.txt'))
+
+# Step 4: Call the function
+project_name = get_project_name(cmake_path)
+print(f"Project name from top level: {project_name}")
+
 # -- Project information -----------------------------------------------------
 
-project = 'Hermes'
+project = project_name
 author = 'Onur Tuncer, PhD'
 copyright = '2025, Onur Tuncer, PhD'
 
@@ -39,16 +52,16 @@ html_static_path = ['_static']
 # Absolute path to doxygen XML output (from CMake)
 # CMake should place it at: build/doc/doxygen/xml
 breathe_projects = {
-    "Hermes": os.path.abspath(os.path.join(os.path.dirname(__file__), "doxygen/xml"))
+    project: os.path.abspath(os.path.join(os.path.dirname(__file__), "doxygen/xml"))
 }
-breathe_default_project = "Hermes"
-breathe_default_namespace = "Hermes"
+breathe_default_project = project
+breathe_default_namespace = project
 
 # Whether to add '()' to function entries in the index and elsewhere
 add_function_parentheses = True
 
 # Optional: helpful print for debugging
-print("Breathe expects Doxygen XML at:", breathe_projects["Hermes"])
+print("Breathe expects Doxygen XML at:", breathe_projects[project])
 
 # -- BibTeX references -------------------------------------------------------
 
@@ -74,4 +87,4 @@ if read_the_docs_build:
         file.write(doxy_config)
 
     subprocess.call('doxygen', shell=True)
-    breathe_projects['Hermes'] = os.path.abspath(os.path.join(os.path.dirname(__file__), 'build/xml'))
+    breathe_projects[project] = os.path.abspath(os.path.join(os.path.dirname(__file__), 'build/xml'))

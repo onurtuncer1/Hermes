@@ -68,7 +68,7 @@ tests: gcc-test
 .PHONY: documents
 
 DOC_SRC_DIR := $(ROOT_DIR)
-DOC_BUILD_DIR := $(BUILD_DIR)/doc
+DOC_BUILD_DIR := $(BUILD_DIR)
 
 documents:
 	@echo "Building documentation from $(DOC_SRC_DIR) into $(DOC_BUILD_DIR)"
@@ -79,9 +79,6 @@ documents:
 			  -DCMAKE_CXX_STANDARD=23 \
 			  -DBUILD_DOCS=ON && \
 		$(MAKE)
-#	@cp -r "$(DOC_BUILD_DIR)/Documentation" "$(BUILD_DIR)/"
-#	@rm -rf "$(BUILD_DIR)/doc"
-
 
 # Cleanup
 # --------------------------------------------------------------------

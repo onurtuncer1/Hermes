@@ -8,7 +8,7 @@ ASTYLE_VER_REQUIRED_3="Artistic Style Version 3.0.1"
 ASTYLE_VER_REQUIRED_4="Artistic Style Version 3.1"
 
 astyle_ver() {
-	echo "CNC requires at least ${ASTYLE_VER_REQUIRED_1}"
+	echo "Code style checking requires at least ${ASTYLE_VER_REQUIRED_1}"
 	echo "You can get the correct version here: https://sourceforge.net/projects/astyle/files/astyle/astyle%202.06/"
 }
 

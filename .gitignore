@@ -1,7 +1,12 @@
 build/*
 
+checks.json
+
 # Prerequisites
 *.d
+
+**/__pycache__/
+**/*.py[cod]
 
 # Compiled Object files
 *.slo
@@ -17,10 +22,6 @@ build/*
 *.so
 *.dylib
 *.dll
-
-# Fortran module files
-*.mod
-*.smod
 
 # Compiled Static libraries
 *.lai

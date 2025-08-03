@@ -1,10 +1,4 @@
 
-# Extract project name from CMakeLists.txt using an external Python script
-PROJECT_NAME := $(shell python3 ./get_project_name.py ./CMakeLists.txt)
-
-# Display project name during the build process
-$(info Project Name: $(PROJECT_NAME))
-
 # Default target
 all: help
 
@@ -54,9 +48,6 @@ check-newlines:
 	$(call colorecho,'Checking for missing or duplicate newlines at the end of files')
 	@"$(ROOT_DIR)"/tools/astyle/check_newlines.sh
 
-# Documentation
-# --------------------------------------------------------------------
-
 # Testing
 # --------------------------------------------------------------------
 .PHONY: tests test-coverage
@@ -65,6 +56,24 @@ tests: gcc-test
 	cd $(BUILD_DIR)/gcc-test && ctest --output-on-failure
 
 
+# Static analysis
+# --------------------------------------------------------------------
+.PHONY: static-analysis
+
+STATIC_ANALYSIS_DIR := $(BUILD_DIR)/static_analysis
+
+static-analysis:
+	@echo "Running static analysis"
+	@mkdir -p $(STATIC_ANALYSIS_DIR)
+	@cd $(STATIC_ANALYSIS_DIR) && \
+		cmake $(ROOT_DIR) \
+			-G "Unix Makefiles" \
+			-DCMAKE_BUILD_TYPE=Release \
+			-DENABLE_STATIC_ANALYSIS=ON 
+	@make -j$(shell nproc) -C $(STATIC_ANALYSIS_DIR) static_analysis
+
+# Documentation
+# --------------------------------------------------------------------
 .PHONY: documents
 
 DOC_SRC_DIR := $(ROOT_DIR)
@@ -84,6 +93,7 @@ documents:
 # --------------------------------------------------------------------
 .PHONY: clean
 clean:
+	@echo "Cleaning up build artifacts"
 	@rm -rf build/*
 
 # Help 

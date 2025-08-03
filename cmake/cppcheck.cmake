@@ -17,7 +17,7 @@ file(MAKE_DIRECTORY ${STATIC_ANALYSIS_REPORT_DIR})
 set(STATIC_ANALYSIS_XML_FILE ${STATIC_ANALYSIS_REPORT_DIR}/static_analysis_report.xml)
 
 # Add namespaced custom target for static analysis (using CMake project name)
-set(NAMESPACED_TARGET "${CMAKE_PROJECT_NAME}_static_analysis")
+set(NAMESPACED_TARGET "static_analysis")
 add_custom_target(${NAMESPACED_TARGET})
 
 # Add custom command to run cppcheck and generate the report
@@ -27,7 +27,7 @@ add_custom_command(TARGET ${NAMESPACED_TARGET}
          --force
          --suppress=unusedFunction
          --cppcheck-build-dir=${STATIC_ANALYSIS_REPORT_DIR}
-         -I/${CMAKE_SOURCE_DIR}/MessageLogger
+         -I/${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}
          --suppressions-list=${CMAKE_BINARY_DIR}/../../tools/cppcheck/CppCheckSuppressions.txt
          --inconclusive
          --xml-version=2

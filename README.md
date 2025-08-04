@@ -11,8 +11,8 @@ C++ logging library (work in progress)
 
 ## 📚 Documentation
 
-[API Docs](https://onurtuncer1.github.io/Hermes/)
-[Static Analysis Results](https://onurtuncer1.github.io/Hermes/static_analysis)
+- [API Docs](https://onurtuncer1.github.io/Hermes/)
+- [Static Analysis Results](https://onurtuncer1.github.io/Hermes/static_analysis)
 
 
 

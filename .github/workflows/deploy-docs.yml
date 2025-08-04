@@ -53,6 +53,9 @@ jobs:
         run: |
           mkdir -p build/doc/sphinx/static_analysis
           cp -r build/static_analysis/static_analysis/* build/doc/sphinx/static_analysis
+      
+      - name: List final Sphinx output
+        run: ls -R build/doc/sphinx
 
       - name: Upload HTML docs to GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3

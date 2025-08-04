@@ -41,7 +41,7 @@ jobs:
       - name: Install system deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y doxygen graphviz cmake ninja-build make gcc g++
+          sudo apt-get install -y doxygen graphviz cmake ninja-build make gcc g++ cppcheck
 
       - name: Build documentation via Makefile
         run: make documents

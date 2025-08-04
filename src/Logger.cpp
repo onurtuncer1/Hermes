@@ -1,6 +1,8 @@
 #include "Logger.h"
 #include <iostream>
 
+void unusedFunction() {} // + cppcheck-suppress unusedFunction
+
 namespace Hermes
 {
 

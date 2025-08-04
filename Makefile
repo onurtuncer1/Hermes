@@ -85,11 +85,12 @@ static-analysis:
 	@echo "Running static analysis"
 	@mkdir -p $(STATIC_ANALYSIS_DIR)
 	@cd $(STATIC_ANALYSIS_DIR) && \
-		cmake $(ROOT_DIR) \
+		cmake -S $(ROOT_DIR) \
+		    -B $(STATIC_ANALYSIS_DIR) \
 			-G "Unix Makefiles" \
 			-DCMAKE_BUILD_TYPE=Release \
-			-DENABLE_STATIC_ANALYSIS=ON 
-	@make -j$(shell nproc) -C $(STATIC_ANALYSIS_DIR) static_analysis
+			-DENABLE_STATIC_ANALYSIS=ON && \
+	    make -C $(STATIC_ANALYSIS_DIR) static_analysis
 
 # Documentation
 # --------------------------------------------------------------------

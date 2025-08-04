@@ -48,6 +48,11 @@ jobs:
 
       - name: Build static analysis via Makefile
         run: make static-analysis
+      
+      - name: List Cppcheck HTML report contents before copying
+        run: |
+          echo "Listing original static_analysis directory"
+          find build/static_analysis/static_analysis -type f
 
       - name: Copy static analysis html files into a folder under sphinx directory
         run: |

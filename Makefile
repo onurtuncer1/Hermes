@@ -7,9 +7,9 @@ ROOT_DIR := $(shell pwd)
 BUILD_DIR := $(ROOT_DIR)/build
 
 # Targets
-.PHONY: all gcc-release  gcc-debug gcc-test clang-debug
+.PHONY: all gcc-release  gcc-debug gcc-test clang-debug gcc-asan gcc-msan gcc-tsan gcc-ubsan
 
-all: gcc-release
+all: gcc-release gcc-asan gcc-msan gcc-tsan gcc-ubsan
 
 # Default gcc-release build
 gcc-release:
@@ -30,6 +30,22 @@ gcc-test:
 clang-debug:
 	cmake --preset=clang-debug
 	cmake --build --preset=clang-debug
+
+# Default gcc build with address sanitizer
+	cmake --preset=gcc-asan
+	cmake --build --preset=gcc-asan
+
+# Default gcc build with memory sanitizer
+	cmake --preset=gcc-msan
+	cmake --build --preset=gcc-msan
+
+# Default gcc build with thread sanitizer
+	cmake --preset=gcc-tsan
+	cmake --build --preset=gcc-tsan
+
+# Dadult gcc build with undefined behaviour sanitizer
+	cmake --preset=gcc-ubsan 
+	cmake --build --preset=gcc-ubsan 
 
 # Style
 # --------------------------------------------------------------------
@@ -54,7 +70,6 @@ check-newlines:
 
 tests: gcc-test
 	cd $(BUILD_DIR)/gcc-test && ctest --output-on-failure
-
 
 # Static analysis
 # --------------------------------------------------------------------

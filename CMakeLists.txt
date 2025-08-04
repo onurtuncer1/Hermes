@@ -1,10 +1,12 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.22)
 
 project(Hermes
   VERSION 1.0.0
   LANGUAGES CXX
   DESCRIPTION "High performance logging"
 )
+
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 add_library(${PROJECT_NAME})
 add_library(Hermes::Logger ALIAS ${PROJECT_NAME})
@@ -40,19 +42,26 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 # )
 
 if (BUILD_DOCS)
-  set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
   add_subdirectory(doc)
 endif()
 
 if (ENABLE_STATIC_ANALYSIS)
-  set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
   include(cppcheck)
 endif()
 
 if(BUILD_TESTS)
-	set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 	include(coverage)
 	add_coverage_target("*/vendor/*") # exclude from coverage
 	enable_testing()
 	add_subdirectory(test)
+endif()
+
+if(CMAKE_BUILD_TYPE MATCHES "AddressSanitizer")
+  include(sanitizers)
+elseif(CMAKE_BUILD_TYPE MATCHES "MemorySanitizer")
+  include(sanitizers)
+elseif(CMAKE_BUILD_TYPE MATCHES "ThreadSanitizer")
+  include(sanitizers)
+elseif(CMAKE_BUILD_TYPE MATCHES "UndefinedBehaviorSanitizer")
+  include(sanitizers)
 endif()

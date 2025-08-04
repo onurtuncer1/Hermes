@@ -32,18 +32,22 @@ clang-debug:
 	cmake --build --preset=clang-debug
 
 # Default gcc build with address sanitizer
+gcc-asan:
 	cmake --preset=gcc-asan
 	cmake --build --preset=gcc-asan
 
 # Default gcc build with memory sanitizer
+gcc-msan:
 	cmake --preset=gcc-msan
 	cmake --build --preset=gcc-msan
 
 # Default gcc build with thread sanitizer
+gcc-tsan:
 	cmake --preset=gcc-tsan
 	cmake --build --preset=gcc-tsan
 
 # Dadult gcc build with undefined behaviour sanitizer
+gcc-ubsan:
 	cmake --preset=gcc-ubsan 
 	cmake --build --preset=gcc-ubsan 
 

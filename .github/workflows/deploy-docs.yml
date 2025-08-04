@@ -49,7 +49,7 @@ jobs:
       - name: Build static analysis via Makefile
         run: make static-analysis
 
-      -name: Copy static analysis html files into a folder under sphinx directory
+      - name: Copy static analysis html files into a folder under sphinx directory
         run: |
           mkdir -p build/doc/sphinx/static_analysis
           cp -r build/static_analysis/static_analysis/* build/doc/sphinx/static_analysis

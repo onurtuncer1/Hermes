@@ -1,4 +1,9 @@
-
+# ------------------------------------------------------------------------------
+# Copyright (c) 2025 Onur Tuncer, PhD, Istanbul Technical University
+#
+# SPDX-License-Identifier: MIT
+# License-Filename: LICENSE
+# ------------------------------------------------------------------------------
 
 # Check prerequisites
 FIND_PROGRAM(CPPCHECK_PATH cppcheck)

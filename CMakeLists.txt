@@ -1,3 +1,11 @@
+# ------------------------------------------------------------------------------
+# Project: Hermes Logging Library
+# Copyright (c) 2025, Onur Tuncer, PhD, Istanbul Technical University
+#
+# SPDX-License-Identifier: MIT
+# License-Filename: LICENSE
+# ------------------------------------------------------------------------------
+
 cmake_minimum_required(VERSION 3.22)
 
 project(Hermes
@@ -13,7 +21,7 @@ add_library(Hermes::Logger ALIAS ${PROJECT_NAME})
 
 target_include_directories(${PROJECT_NAME}
   PUBLIC 
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:${PROJECT_NAME}>
 )
 

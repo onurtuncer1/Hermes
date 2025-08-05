@@ -1,3 +1,11 @@
+// ----------------------------------------------------------------------
+// Project: Hermes Logging Library
+// Copyright(c) 2025 Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX - License - Identifier : MIT
+// License - Filename : LICENSE
+// ----------------------------------------------------------------------
+
 /// @file Logger.h
 /// @brief Lightweight logging framework for the Hermes project.
 

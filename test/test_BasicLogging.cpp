@@ -1,4 +1,12 @@
-#include <Logger.h>
+// ----------------------------------------------------------------------
+// Project: Hermes Logging Library
+// Copyright(c) 2025 Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX - License - Identifier : MIT
+// License - Filename : LICENSE
+// ----------------------------------------------------------------------
+
+#include <Hermes/Logger.h>
 #include <catch2/catch_test_macros.hpp>
 
 using namespace Hermes;

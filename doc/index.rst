@@ -1,5 +1,13 @@
+.. ------------------------------------------------------------------------------
+.. Project: Hermes Logging Library
+.. Copyright (c) 2025, Onur Tuncer, PhD, Istanbul Technical University
+..
+.. SPDX-License-Identifier: MIT
+.. License-Filename: LICENSE
+.. ------------------------------------------------------------------------------
+
 .. Documentation master file
-   You can adapt this file completely to your liking, but it should at least
+   It should at least
    contain the root `toctree` directive.
 
 .. _mainpage:

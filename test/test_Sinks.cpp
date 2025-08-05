@@ -1,6 +1,14 @@
-#include <Logger.h>
-#include <catch2/catch_test_macros.hpp>
+// ----------------------------------------------------------------------
+// Project: Hermes Logging Library
+// Copyright(c) 2025 Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX - License - Identifier : MIT
+// License - Filename : LICENSE
+// ----------------------------------------------------------------------
+
 #include <sstream>
+#include <catch2/catch_test_macros.hpp>
+#include <Hermes/Logger.h>
 
 class TestSink : public Hermes::Logger::Sink
 {
@@ -21,13 +29,17 @@ public:
 TEST_CASE("Sink system", "[sinks]")
 {
 	auto shared_sink = std::make_shared<TestSink>();
-	Hermes::Logger::clear_sinks_for_testing();
+	Hermes::Logger::clear_sinks_for_testing(); // good for test isolation
 	Hermes::Logger::set_level(Hermes::Logger::Level::Trace);
+	Hermes::Logger::add_sink(shared_sink); // 🔹 add this line
 
-	SECTION("Messages reach sinks") {
+	SECTION("Messages reach sinks")
+	{
 		Hermes::Logger::log(Hermes::Logger::Level::Error, "Test error");
+
+		// Optional: debug output
+		// std::cout << "Captured: " << shared_sink->stream.str() << "\n";
+
 		REQUIRE(shared_sink->stream.str().find("[ERROR] Test error") != std::string::npos);
 	}
 }
-
-

@@ -1,4 +1,9 @@
-
+# ------------------------------------------------------------------------------
+# Copyright (c) 2025 Onur Tuncer, PhD, Istanbul Technical University
+#
+# SPDX-License-Identifier: MIT
+# License-Filename: LICENSE
+# ------------------------------------------------------------------------------
 
 function(add_coverage_target exclude)
 
@@ -19,9 +24,7 @@ function(add_coverage_target exclude)
 
     if (LCOV AND GCOV AND GENHTML)
         set(covname cov.info)
-        add_compile_options(-fprofile-arcs -ftest-coverage)
-        add_link_options(--coverage)
-
+       
         add_custom_target(messagelogger_cov DEPENDS ${covname})
 
         add_custom_command(

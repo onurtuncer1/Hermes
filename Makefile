@@ -1,3 +1,9 @@
+# ------------------------------------------------------------------------------
+# Copyright (c) 2025, Onur Tuncer, PhD, Istanbul Technical University
+#
+# SPDX-License-Identifier: MIT
+# License-Filename: LICENSE
+# ------------------------------------------------------------------------------
 
 # Default target
 all: help
@@ -70,11 +76,36 @@ check-newlines:
 
 # Testing
 # --------------------------------------------------------------------
-.PHONY: tests test-coverage
+.PHONY: tests coverage coverage-xml
 
-tests: gcc-test
-	cd $(BUILD_DIR)/gcc-test && ctest --output-on-failure
+tests: 
+	cmake --preset=gcc-debug
+	cmake --build --preset=gcc-debug
+	ctest --preset=gcc-test
 
+coverage:
+	@echo "Configuring project with gcc-debug (with coverage flags)..."
+	cmake --preset=gcc-debug
+
+	@echo "Building tests..."
+	cmake --build --preset=gcc-debug
+
+	@echo "Running tests..."
+	ctest --preset=gcc-test
+
+	@mkdir -p coverage
+	@echo "Generating coverage report using gcovr..."
+	@gcovr -r . --html --html-details -o coverage/coverage.html --exclude-directories build/.*
+	@echo "Coverage report generated at coverage/coverage.html"
+
+
+coverage-xml:
+	cmake --preset=gcc-debug
+	cmake --build --preset=gcc-debug
+	ctest --preset=gcc-test
+	gcovr -r . --xml-pretty -o coverage/coverage.xml --exclude-directories build/.*
+
+	    
 # Static analysis
 # --------------------------------------------------------------------
 .PHONY: static-analysis

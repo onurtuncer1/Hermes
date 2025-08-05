@@ -1,4 +1,10 @@
-# Doxyfile 1.8.11
+# ------------------------------------------------------------------------------
+# Project: Hermes Logging Library
+# Copyright (c) 2025, Onur Tuncer, PhD, Istanbul Technical University
+#
+# SPDX-License-Identifier: MIT
+# License-Filename: LICENSE
+# ------------------------------------------------------------------------------
 
 # This file describes the settings to be used by the documentation system
 # doxygen (www.doxygen.org) for a project.
@@ -18,9 +24,7 @@
 #---------------------------------------------------------------------------
 
 # This tag specifies the encoding used for all characters in the config file
-# that follow. The default is UTF-8 which is also the encoding used for all text
-# before the first occurrence of this tag. Doxygen uses libiconv (or the iconv
-# built into libc) for the transcoding. See http://www.gnu.org/software/libiconv
+# that follow. See http://www.gnu.org/software/libiconv
 # for the list of possible encodings.
 # The default value is: UTF-8.
 
@@ -242,9 +246,7 @@ ALIASES                =
 
 
 # Set the OPTIMIZE_OUTPUT_FOR_C tag to YES if your project consists of C sources
-# only. Doxygen will then generate output that is more tailored for C. For
-# instance, some of the names that are used will be different. The list of all
-# members will be omitted, etc.
+# only. Doxygen will then generate output that is more tailored for C. 
 # The default value is: NO.
 
 OPTIMIZE_OUTPUT_FOR_C  = NO

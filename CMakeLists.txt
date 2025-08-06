@@ -34,21 +34,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 
-# include(GNUInstallDirs)
-# install(TARGETS Hermes
-#   EXPORT HermesLoggerTargets
-#   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-# )
-
-# install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-# install(EXPORT HermesLoggerTargets
-#   FILE HermesLoggerConfig.cmake
-#   NAMESPACE Hermes::
-#   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-# )
-
 if (BUILD_DOCS)
   add_subdirectory(doc)
 endif()
@@ -58,8 +43,6 @@ if (ENABLE_STATIC_ANALYSIS)
 endif()
 
 if(BUILD_TESTS)
-	include(coverage)
-	add_coverage_target("*/vendor/*") # exclude from coverage
 	enable_testing()
 	add_subdirectory(test)
 endif()

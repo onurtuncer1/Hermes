@@ -7,8 +7,8 @@
 // ----------------------------------------------------------------------
 
 #include <sstream>
+#include <catch2/catch_test_macros.hpp>
 #include <Hermes/Logger.h>
-#include <catch2/catch.hpp> // Catch2 v2
 
 struct Point3D { double x, y, z; };
 

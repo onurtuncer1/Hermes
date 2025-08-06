@@ -28,6 +28,7 @@ jobs:
     - name: Upload to Codecov
       uses: codecov/codecov-action@v4
       with:
+        token: ${{ secrets.CODECOV_TOKEN }}
         files: build/gcc-debug/coverage_filtered.info
         flags: unittests
         name: codecov-report

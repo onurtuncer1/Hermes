@@ -25,11 +25,8 @@ jobs:
     - name: Generate coverage
       run: make coverage
 
-    - name: Upload to Codecov
-      uses: codecov/codecov-action@v4
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        files: build/gcc-debug/coverage_filtered.info
-        flags: unittests
-        name: codecov-report
-        fail_ci_if_error: true
+        slug: onurtuncer1/Hermes

@@ -91,13 +91,21 @@ COV_DIR := $(BUILD_DIR)/coverage
 # Exclude patterns
 LCOV_EXCLUDES := '*/test/*' '*/_deps/*'
 
-# Tools
-GCOV_TOOL := gcov-13  # must match compiler
-LCOV := lcov
-GENHTML := genhtml
 
 .PHONY: coverage
+
+LCOV       := lcov
+GCOV_TOOL  := gcov-13
+COV_INFO   := build/gcc-debug/coverage.info
+COV_FILTERED := build/gcc-debug/coverage_filtered.info
+COV_DIR    := $(BUILD_DIR)/coverage_report
+GENHTML    := genhtml
+
 coverage:
+	cmake --preset=gcc-debug
+	cmake --build --preset=gcc-debug
+	ctest --preset=gcc-test
+	mkdir -p $(COV_DIR)
 	@echo "Capturing coverage data..."
 	$(LCOV) --capture \
 	        --directory build/gcc-debug \
@@ -106,15 +114,21 @@ coverage:
 	        --base-directory . >/dev/null
 
 	@echo "Excluding unnecessary files..."
-	$(LCOV) --remove $(COV_INFO) '*/test/*' '*/_deps/*' --output-file $(COV_INFO) >/dev/null
+	$(LCOV) --remove $(COV_INFO) \
+	        '*/test/*' \
+	        '*/_deps/*' \
+	        '/usr/*' \
+	        '*/Catch2/*' \
+	        --output-file $(COV_FILTERED) >/dev/null
 
 	@echo "Generating HTML report..."
 	@mkdir -p $(COV_DIR)
-	$(GENHTML) $(COV_INFO) --output-directory $(COV_DIR) >/dev/null
+	$(GENHTML) $(COV_FILTERED) --output-directory $(COV_DIR) >/dev/null
 
 	@echo -n "Total Coverage: "
-	$(LCOV) -l $(COV_INFO) 2>/dev/null | grep Total | sed 's/|//g' | sed 's/Total://g' | awk '{print $$1}' | sed s/%//g > $(COV_DIR)/total
+	$(LCOV) -l $(COV_FILTERED) 2>/dev/null | grep Total | sed 's/|//g' | sed 's/Total://g' | awk '{print $$1}' | sed s/%//g > $(COV_DIR)/total
 	@cat $(COV_DIR)/total
+
 
 	    
 # Static analysis

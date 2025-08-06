@@ -76,34 +76,45 @@ check-newlines:
 
 # Testing
 # --------------------------------------------------------------------
-.PHONY: tests coverage coverage-xml
+.PHONY: tests 
 
 tests: 
 	cmake --preset=gcc-debug
 	cmake --build --preset=gcc-debug
 	ctest --preset=gcc-test
 
+# Paths
+BUILD_DIR := build/gcc-debug
+COV_INFO := $(BUILD_DIR)/coverage.info
+COV_DIR := $(BUILD_DIR)/coverage
+
+# Exclude patterns
+LCOV_EXCLUDES := '*/test/*' '*/_deps/*'
+
+# Tools
+GCOV_TOOL := gcov-13  # must match compiler
+LCOV := lcov
+GENHTML := genhtml
+
+.PHONY: coverage
 coverage:
-	@echo "Configuring project with gcc-debug (with coverage flags)..."
-	cmake --preset=gcc-debug
+	@echo "Capturing coverage data..."
+	$(LCOV) --capture \
+	        --directory build/gcc-debug \
+	        --output-file $(COV_INFO) \
+	        --gcov-tool=$(GCOV_TOOL) \
+	        --base-directory . >/dev/null
 
-	@echo "Building tests..."
-	cmake --build --preset=gcc-debug
+	@echo "Excluding unnecessary files..."
+	$(LCOV) --remove $(COV_INFO) '*/test/*' '*/_deps/*' --output-file $(COV_INFO) >/dev/null
 
-	@echo "Running tests..."
-	ctest --preset=gcc-test
+	@echo "Generating HTML report..."
+	@mkdir -p $(COV_DIR)
+	$(GENHTML) $(COV_INFO) --output-directory $(COV_DIR) >/dev/null
 
-	@mkdir -p coverage
-	@echo "Generating coverage report using gcovr..."
-	@gcovr -r . --html --html-details -o coverage/coverage.html --exclude-directories build/.*
-	@echo "Coverage report generated at coverage/coverage.html"
-
-
-coverage-xml:
-	cmake --preset=gcc-debug
-	cmake --build --preset=gcc-debug
-	ctest --preset=gcc-test
-	gcovr -r . --xml-pretty -o coverage/coverage.xml --exclude-directories build/.*
+	@echo -n "Total Coverage: "
+	$(LCOV) -l $(COV_INFO) 2>/dev/null | grep Total | sed 's/|//g' | sed 's/Total://g' | awk '{print $$1}' | sed s/%//g > $(COV_DIR)/total
+	@cat $(COV_DIR)/total
 
 	    
 # Static analysis

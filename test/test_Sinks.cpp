@@ -37,9 +37,6 @@ TEST_CASE("Sink system", "[sinks]")
 	{
 		Hermes::Logger::log(Hermes::Logger::Level::Error, "Test error");
 
-		// Optional: debug output
-		// std::cout << "Captured: " << shared_sink->stream.str() << "\n";
-
 		REQUIRE(shared_sink->stream.str().find("[ERROR] Test error") != std::string::npos);
 	}
 }

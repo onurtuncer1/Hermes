@@ -6,9 +6,10 @@
 // License - Filename : LICENSE
 // ----------------------------------------------------------------------
 
-#include <Logger.h>
+
 #include <catch2/catch_test_macros.hpp>
 #include <sstream>
+#include <Hermes/Logger.h>
 
 struct Point3D { double x, y, z; };
 
@@ -38,10 +39,5 @@ TEST_CASE("CAD geometry logging", "[cad]")
 		REQUIRE(sink_ref.stream.str().find("(1.23, 2.35, 3.46)") != std::string::npos);
 	}
 
-	SECTION("Performance-critical logging") {
-		BENCHMARK("Vector3D format") {
-			Point3D p{1.1, 2.2, 3.3};
-			Hermes::Logger::log(Hermes::Logger::Level::Debug, "{}", p);
-		};
-	}
+	
 }

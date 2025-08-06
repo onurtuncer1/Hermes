@@ -18,6 +18,8 @@ C++ logging library (work in progress)
 
 ### Bug Tracker
 
+- [Github Issues](https://github.com/onurtuncer1/Hermes/issues)
+
 
 ### Forums and Discussions
 

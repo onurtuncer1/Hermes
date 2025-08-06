@@ -84,9 +84,9 @@ tests:
 	ctest --preset=gcc-test
 
 # Paths
-BUILD_DIR := build/gcc-debug
-COV_INFO := $(BUILD_DIR)/coverage.info
-COV_DIR := $(BUILD_DIR)/coverage
+COV_BUILD_DIR := build/gcc-debug
+COV_INFO := $(COV_BUILD_DIR)/coverage.info
+COV_DIR := $(COV_BUILD_DIR)/coverage
 
 # Exclude patterns
 LCOV_EXCLUDES := '*/test/*' '*/_deps/*'
@@ -98,7 +98,7 @@ LCOV       := lcov
 GCOV_TOOL  := gcov-13
 COV_INFO   := build/gcc-debug/coverage.info
 COV_FILTERED := build/gcc-debug/coverage_filtered.info
-COV_DIR    := $(BUILD_DIR)/coverage_report
+COV_DIR    := $(COV_BUILD_DIR)/coverage_report
 GENHTML    := genhtml
 
 coverage:
@@ -119,7 +119,8 @@ coverage:
 	        '*/_deps/*' \
 	        '/usr/*' \
 	        '*/Catch2/*' \
-	        --output-file $(COV_FILTERED) >/dev/null
+			--output-file $(COV_FILTERED) \
+			--ignore-errors unused >/dev/null
 
 	@echo "Generating HTML report..."
 	@mkdir -p $(COV_DIR)
@@ -129,8 +130,7 @@ coverage:
 	$(LCOV) -l $(COV_FILTERED) 2>/dev/null | grep Total | sed 's/|//g' | sed 's/Total://g' | awk '{print $$1}' | sed s/%//g > $(COV_DIR)/total
 	@cat $(COV_DIR)/total
 
-
-	    
+    
 # Static analysis
 # --------------------------------------------------------------------
 .PHONY: static-analysis

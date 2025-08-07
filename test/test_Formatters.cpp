@@ -33,7 +33,7 @@ TEST_CASE("CAD geometry logging", "[cad]")
 
 	SECTION("3D point formatting") {
 		Point3D p{1.23456, 2.34567, 3.45678};
-		Hermes::Logger::log(Hermes::Logger::Level::Info, "Point: {}", p);
+		HLOG(Hermes::Logger::Level::Info, "Point: {}", p);
 
 		REQUIRE(sink_ref.stream.str().find("(1.23, 2.35, 3.46)") != std::string::npos);
 	}

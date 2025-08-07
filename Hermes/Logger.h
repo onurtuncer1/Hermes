@@ -1,4 +1,4 @@
-// ----------------------------------------------------------------------
+//----------------------------------------------------------------------
 // Project: Hermes Logging Library
 // Copyright(c) 2025 Onur Tuncer, PhD, Istanbul Technical University
 //
@@ -39,8 +39,7 @@ public:
 		Info,      ///< Informational messages.
 		Warn,      ///< Warnings that don’t interrupt execution.
 		Error,     ///< Errors that allow the program to continue.
-		Critical,  ///< Severe errors likely leading to termination.
-		Off        ///< Logging disabled.
+		Critical  ///< Severe errors likely leading to termination.
 	};
 
 	/**
@@ -67,21 +66,6 @@ public:
 		virtual void flush() = 0;
 	};
 
-	/**
-	 * @brief Logs a message at the given level with formatting.
-	 *
-	 * Uses `std::source_location::current()` to capture the call site.
-	 *
-	 * @tparam Args Variadic arguments for formatting.
-	 * @param level The logging level.
-	 * @param fmt Format string.
-	 * @param args Format arguments.
-	 */
-	template <typename... Args>
-	static void log(Level level, std::string_view fmt, Args &&... args)
-	{
-		log(std::source_location::current(), level, fmt, std::forward<Args>(args)...);
-	}
 
 	/**
 	 * @brief Logs a message with an explicitly provided source location.
@@ -93,7 +77,7 @@ public:
 	 * @param args Format arguments.
 	 */
 	template <typename... Args>
-	static void log(const std::source_location &loc,
+	static void log(std::source_location loc,
 					Level level,
 					std::string_view fmt,
 					Args &&... args)
@@ -189,6 +173,8 @@ public:
 };
 
 } // namespace Hermes
+
+#define HLOG(level, fmt, ...) Hermes::Logger::log(std::source_location::current(), level, fmt, ##__VA_ARGS__)
 
 
 

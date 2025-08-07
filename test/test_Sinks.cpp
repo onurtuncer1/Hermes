@@ -28,13 +28,15 @@ public:
 
 TEST_CASE("Sink system", "[sinks]")
 {
+	using namespace Hermes;
 	auto shared_sink = std::make_shared<TestSink>();
-	Hermes::Logger::clear_sinks(); // good for test isolation
-	Hermes::Logger::set_level(Hermes::Logger::Level::Trace);
-	Hermes::Logger::add_sink(shared_sink); // 🔹 add this line
+	Logger::clear_sinks(); // good for test isolation
+	Logger::set_level(Hermes::Logger::Level::Trace);
+	Logger::add_sink(shared_sink); // 🔹 add this line
 
 	SECTION("Messages reach sinks") {
-		Hermes::Logger::log(Hermes::Logger::Level::Error, "Test error");
+		using Level = Hermes::Logger::Level;
+		HLOG(Level::Error, "{}", "Test error");
 
 		REQUIRE(shared_sink->stream.str().find("[ERROR] Test error") != std::string::npos);
 	}

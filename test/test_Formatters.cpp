@@ -38,5 +38,5 @@ TEST_CASE("CAD geometry logging", "[cad]")
 		REQUIRE(sink_ref.stream.str().find("(1.23, 2.35, 3.46)") != std::string::npos);
 	}
 
-	
+
 }

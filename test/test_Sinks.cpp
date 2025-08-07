@@ -8,7 +8,7 @@
 
 #include <sstream>
 #include <Hermes/Logger.h>
-#include <catch2/catch_test_macros.hpp> 
+#include <catch2/catch_test_macros.hpp>
 
 class TestSink : public Hermes::Logger::Sink
 {
@@ -29,12 +29,11 @@ public:
 TEST_CASE("Sink system", "[sinks]")
 {
 	auto shared_sink = std::make_shared<TestSink>();
-	Hermes::Logger::clear_sinks_for_testing(); // good for test isolation
+	Hermes::Logger::clear_sinks(); // good for test isolation
 	Hermes::Logger::set_level(Hermes::Logger::Level::Trace);
 	Hermes::Logger::add_sink(shared_sink); // 🔹 add this line
 
-	SECTION("Messages reach sinks")
-	{
+	SECTION("Messages reach sinks") {
 		Hermes::Logger::log(Hermes::Logger::Level::Error, "Test error");
 
 		REQUIRE(shared_sink->stream.str().find("[ERROR] Test error") != std::string::npos);

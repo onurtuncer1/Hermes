@@ -14,6 +14,10 @@ C++ logging library (work in progress)
 - [API Docs](https://onurtuncer1.github.io/Hermes/)
 - [Static Analysis Results](https://onurtuncer1.github.io/Hermes/static_analysis)
 
+## Dependencies
+
+Catch2 v3 is required for testing. 
+
 ## Development
 
 ### Bug Tracker
@@ -23,5 +27,6 @@ C++ logging library (work in progress)
 
 ### Forums and Discussions
 
+- [Github Discussions](https://github.com/onurtuncer1/Hermes/discussions/)
 
 

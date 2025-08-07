@@ -1,7 +1,7 @@
 // ----------------------------------------------------------------------
 // Project: Hermes Logging Library
 // Copyright(c) 2025 Onur Tuncer, PhD, Istanbul Technical University
-// 
+//
 // SPDX - License - Identifier : MIT
 // License - Filename : LICENSE
 // ----------------------------------------------------------------------
@@ -10,6 +10,7 @@
 #include <iostream>
 #include <chrono>
 #include <iomanip>
+#include <utility>
 #include "Hermes/Logger.h"
 
 namespace Hermes
@@ -32,7 +33,7 @@ const char *get_color(Logger::Level level)
 
 	case Logger::Level::Critical: return "\033[1;31m"; // Bright Red
 
-	default:                      return "\033[0m"; // Reset
+	default: std::unreachable();
 	}
 }
 
@@ -51,7 +52,7 @@ const char *get_level_name(Logger::Level level)
 
 	case Logger::Level::Critical: return "CRITICAL";
 
-	default:                      return "UNKNOWN";
+	default: std::unreachable();
 	}
 }
 

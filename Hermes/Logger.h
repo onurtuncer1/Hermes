@@ -141,7 +141,7 @@ public:
 	/**
 	 * @brief Removes all logging sinks. Used primarily for testing.
 	 */
-	static void clear_sinks_for_testing();
+	static void clear_sinks();
 
 private:
 	/// Private constructor for singleton pattern.
@@ -189,6 +189,7 @@ public:
 };
 
 } // namespace Hermes
+
 
 
 

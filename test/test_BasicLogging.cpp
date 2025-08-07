@@ -13,13 +13,26 @@ using namespace Hermes;
 
 TEST_CASE("Basic logging functionality", "[core]")
 {
-	Logger::clear_sinks_for_testing();
+	Logger::clear_sinks();
+	Logger::set_level(Hermes::Logger::Level::Trace);
+	Logger::set_level(Hermes::Logger::Level::Debug);
+	Logger::set_level(Hermes::Logger::Level::Warn);
+	Logger::set_level(Hermes::Logger::Level::Error);
+	Logger::set_level(Hermes::Logger::Level::Critical);
 	Logger::set_level(Hermes::Logger::Level::Info);
-	Logger::add_sink(std::make_shared<Hermes::ConsoleSink>());
+
+	auto test_sink = std::make_shared<Hermes::ConsoleSink>();
+	Logger::add_sink(test_sink);
 
 	SECTION("Formatting works") {
+		Logger::log(Hermes::Logger::Level::Trace, "Value: {}", 40);
+		Logger::log(Hermes::Logger::Level::Debug, "Value: {}", 41);
 		Logger::log(Hermes::Logger::Level::Info, "Value: {}", 42);
 		Logger::log(Hermes::Logger::Level::Warn, "Value: {}", 43);
+		Logger::log(Hermes::Logger::Level::Error, "Value: {}", 44);
+		Logger::log(Hermes::Logger::Level::Critical, "Value: {}", 45);
 		REQUIRE(true);
 	}
+
+	test_sink->flush();
 }

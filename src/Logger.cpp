@@ -9,8 +9,6 @@
 #include <iostream>
 #include "Hermes/Logger.h"
 
-void unusedFunction() {} // no suppression
-
 namespace Hermes
 {
 
@@ -48,7 +46,7 @@ void Logger::set_level(Level level)
 	instance().current_level.store(level);
 }
 
-void Logger::clear_sinks_for_testing()
+void Logger::clear_sinks()
 {
 	std::lock_guard lock(instance().sinks_mutex);
 	instance().sinks.clear();

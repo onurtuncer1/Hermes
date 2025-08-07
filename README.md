@@ -1,7 +1,7 @@
 # Hermes
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![ci](https://github.com/onurtuncer1/Hermes/actions/workflows/gcc-release.yml/badge.svg)](https://github.com/onurtuncer1/Hermes/actions/workflows/gcc-release.yml)
+[![ci](https://github.com/onurtuncer1/Hermes/actions/workflows/linux.yml/badge.svg)](https://github.com/onurtuncer1/Hermes/actions/workflows/linux.yml)
 [![ci](https://github.com/onurtuncer1/Hermes/actions/workflows/windows.yml/badge.svg)](https://github.com/onurtuncer1/Hermes/actions/workflows/windows.yml)
 [![codecov](https://codecov.io/gh/onurtuncer1/Hermes/branch/main/graph/badge.svg)](https://codecov.io/gh/onurtuncer1/Hermes)
 

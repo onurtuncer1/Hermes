@@ -11,6 +11,8 @@ find_package(Catch2 REQUIRED)
 add_executable(${PROJECT_NAME}Tests
   test_BasicLogging.cpp
   test_Sinks.cpp
+  test_Exception.cpp
+  test_Formatters.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}Tests PRIVATE

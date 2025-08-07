@@ -6,7 +6,6 @@
 // License - Filename : LICENSE
 // ----------------------------------------------------------------------
 
-
 #include <iostream>
 #include <chrono>
 #include <iomanip>
